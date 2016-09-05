@@ -7,6 +7,7 @@ import {
   Text,
   ListView,
   TouchableHighlight,
+  TouchableOpacity,
   Navigator,
   View
 } from 'react-native';
@@ -24,6 +25,18 @@ class HomePage extends Component
   }
   render() {
     return (
+    <Navigator
+        renderScene={this.renderScene.bind(this)}
+        navigationBar={
+          <Navigator.NavigationBar style={{backgroundColor: '#000000', alignItems: 'center'}}
+              routeMapper={NavigationBarRouteMapper} />
+        } />
+  );
+
+  }
+  renderScene(route, navigator) {
+    return (
+
       <View style={{paddingTop: 22,flex:1}}>
         <ListView
           dataSource={this.state.dataSource}
@@ -130,5 +143,22 @@ const styles = StyleSheet.create({
    color: '#000000',
  }
 });
+var NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    return null;
+  },
+  RightButton(route, navigator, index, navState) {
+    return null;
+  },
+  Title(route, navigator, index, navState) {
+    return (
+      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+          React List Demo
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+};
 
 module.exports = HomePage;

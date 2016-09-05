@@ -6,6 +6,7 @@ import {
   Text,
   ListView,
   TouchableHighlight,
+   TouchableOpacity,
   Navigator,
   View
 } from 'react-native';
@@ -13,12 +14,52 @@ class DetailPage extends Component
 {
   render() {
     return (
-      <View style={{paddingTop: 22,flex:1}}>
-        <Text style={styles.textStyle}>Detail Page is showing  { this.props.username }</Text>
-      </View>
+     <Navigator
+         renderScene={this.renderScene.bind(this)}
+         navigator={this.props.navigator}
+         navigationBar={
+           <Navigator.NavigationBar style={{backgroundColor: '#000000'}}
+               routeMapper={NavigationBarRouteMapper} />
+         } />
+   );
+
+}
+renderScene(route, navigator) {
+  return (
+    <View style={{paddingTop: 22,flex:1}}>
+      <Text style={styles.textStyle}>Detail Page is showing { this.props.username }</Text>
+    </View>
+  );
+}
+}
+
+var NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    return (
+      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
+          onPress={() => navigator.parentNavigator.pop()}>
+        <Text style={{color: 'white', margin: 10,}}>
+          back
+        </Text>
+      </TouchableOpacity>
     );
-}
-}
+  },
+  RightButton(route, navigator, index, navState) {
+    return null;
+  },
+  Title(route, navigator, index, navState) {
+    return (
+      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+          List Detail Page
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+};
+
+
+
 const styles = StyleSheet.create({
   container: {
 
